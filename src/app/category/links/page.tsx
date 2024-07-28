@@ -1,5 +1,5 @@
 "use client"
-import "./links.css";
+import "./Links.css";
 import { useEffect, useState } from "react";
 import { getAccessToken } from "../../constants/storage";
 import { deleteLink, getLinks, patchLink } from "../../api/linksAPI";
