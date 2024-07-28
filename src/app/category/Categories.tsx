@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import { getAccessToken } from "../constants/storage";
 import {
@@ -65,7 +65,7 @@ function Categories() {
                 const sharedMessageText = `${category.name}`;
 
                 await navigator.share({
-                    title: 'Share Category',
+                    title: "Share Category",
                     text: sharedMessageText,
                     url: categoryLink,
                 });
@@ -168,8 +168,7 @@ function Categories() {
                                     avatar
                                     active>
                                     <Link
-                                        href={`${num
-                                            }`}>
+                                        href={`${num}`}>
                                         <Text
                                             style={{
                                                 color: "blue",

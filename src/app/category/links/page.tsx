@@ -150,6 +150,7 @@ function Links() {
                                     style={{
                                         marginBottom: "16px",
                                     }}
+                                    key={link.id}
                                     cover={
                                         link.image ? (
                                             <Avatar
@@ -170,8 +171,7 @@ function Links() {
                                                 marginLeft: "5px",
                                             }} />
                                         )
-                                    }
-                                    key={link.id}>
+                                    }>
                                     <div className="link-details">
                                         <Card
                                             style={{
