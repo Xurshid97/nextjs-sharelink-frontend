@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { getLinks } from "../../api/linksAPI";
 import { LINKS_URL, changed_img } from "../../constants/urls";
@@ -8,8 +8,9 @@ import "./SharedLinks.css";
 import { Avatar, Card, Divider, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Meta from "antd/es/card/Meta";
-import { ShareAltOutlined, ExportOutlined } from '@ant-design/icons'
+import { ShareAltOutlined, ExportOutlined } from '@ant-design/icons';
 import { saveCategoryListToUser } from "../../api/userAPI";
+
 interface LinkData {
     id: number;
     title: string;
@@ -21,18 +22,17 @@ interface LinkData {
 function SharedLinks({ params }: { params: { categoryId: number } }) {
     const [links, setLinks] = useState<LinkData[]>([]);
     const [categoryName, setCategoryName] = useState<string>("");
-    const categoryId = params.categoryId
+    const categoryId = params.categoryId;
 
     const fetchData = async () => {
         try {
             if (categoryId) {
                 const linksData = await getLinks(LINKS_URL, Number(categoryId)); // Convert categoryId to a number
-                // console.log("Links data:", linksData);
                 setCategoryName(linksData.category_name);
                 setLinks(linksData.links);
                 await setStoredCategories([Number(categoryId)]);
-                const storedCategories = getStoredCategories()
-                saveCategoryListToUser(storedCategories)
+                const storedCategories = getStoredCategories();
+                saveCategoryListToUser(storedCategories);
             }
         } catch (error) {
             console.error("Error fetching links:", error);
@@ -72,11 +72,9 @@ function SharedLinks({ params }: { params: { categoryId: number } }) {
                     renderItem={(link) => (
                         <Card
                             className="card-links"
-                            key={link.id}
+                            key={link.id} // Add key prop here
                             cover={
                                 link.image ? (
-                                    // null ? (
-
                                     <Avatar size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
                                         style={{
                                             borderRadius: "50%",
