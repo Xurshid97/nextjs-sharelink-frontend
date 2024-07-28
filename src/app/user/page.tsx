@@ -1,7 +1,5 @@
-"use client"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
-
 import { Button, Flex, Input, Modal, Space } from "antd";
 import { useEffect, useState } from "react";
 import { BASE_URL, changed_img } from "../constants/urls";
@@ -18,7 +16,7 @@ interface UserData {
     image: string;
 }
 
-function UserPage({ children }: { children: React.ReactNode }) {
+const UserPage = ({ children }: { children: React.ReactNode }) => {
     const location = usePathname();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [imageFile, setImageFile] = useState<File | null>(null);
@@ -69,7 +67,6 @@ function UserPage({ children }: { children: React.ReactNode }) {
         const accessToken = getAccessToken() || "";
         console.log(accessToken, 'unexpected request is here');
         if (accessToken && accessToken !== "") {
-
             getUserData(accessToken).then((data) => {
                 setUserData(data);
             });
@@ -122,8 +119,7 @@ function UserPage({ children }: { children: React.ReactNode }) {
                             display: "flex",
                             justifyContent: "center",
                             gap: '10px',
-                        }
-                        }
+                        }}
                     >
                         <Button
                             type="primary"
