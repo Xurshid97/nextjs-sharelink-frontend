@@ -1,0 +1,94 @@
+.card-links {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+    margin-bottom: 3px;
+    border: 1px solid blue;
+}
+
+.card-links img {
+    align-self: flex-start;
+}
+
+.card-links p {
+    max-width: 180px;
+}
+
+.ant-card-body {
+    padding: 3px !important;
+}
+
+.ant-card-meta-detail {
+    padding: 3px !important;
+}
+
+.ant-space-item {
+    width: 100% !important;
+}
+
+.ant-card-actions {
+    margin-top: 5px !important;
+    width: 100% !important;
+}
+
+.ant-card-meta-title a {
+    word-break: break-word;
+    overflow-wrap: break-word !important;
+    white-space: normal;
+    font-size: small;
+}
+
+.ant-card-meta-title span {
+    line-height: 0 !important;
+}
+
+.ant-card-meta-description {
+    font-size: smaller;
+}
+
+@media screen and (min-width: 508px) {
+    .card-links {
+        width: 100% !important;
+        display: flex;
+        align-items: center;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        border-top: none;
+        border-bottom: 1px solid blue;
+    }
+
+    .card-links img {
+        width: 100% !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        object-fit: fill;
+    }
+
+    .ant-card-body {
+        padding: 5px !important;
+        width: 100% !important;
+    }
+
+    .ant-space {
+        width: 100% !important;
+    }
+
+    .ant-card {
+        padding: 3px 0 !important;
+    }
+
+    .ant-card-meta-title {
+        overflow-wrap: break-word;
+    }
+
+    .ant-card-meta-title a {
+        font-size: medium;
+    }
+
+    .ant-card-meta-description {
+        font-size: small;
+    }
+}

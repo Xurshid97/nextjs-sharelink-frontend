@@ -1,0 +1,5 @@
+@media (min-width: 600px) {
+    .input-component, .button-component {
+      min-width: 300px !important; /* or any width you want */
+    }
+  }

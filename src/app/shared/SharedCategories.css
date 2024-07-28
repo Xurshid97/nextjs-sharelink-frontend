@@ -1,0 +1,5 @@
+@media screen and (max-width: 400px) {
+  .ant-layout-content{
+    padding: 24px 5px !important;
+  }
+}
