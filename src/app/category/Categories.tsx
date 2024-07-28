@@ -162,9 +162,10 @@ function Categories() {
                                     className="category-card"
                                     style={{ marginBottom: "16px" }}
                                     actions={[
-                                        <ShareAltOutlined onClick={() => handleShareClick(category)} />,
+                                        <ShareAltOutlined key="share" onClick={() => handleShareClick(category)} />,
                                         <EditFilled key="edit" onClick={() => editHandler(category)} />,
                                         <Popconfirm
+                                            key="delete"
                                             title="Delete the task"
                                             description="Are you sure to delete this category?"
                                             onConfirm={() => confirm(category.id)}

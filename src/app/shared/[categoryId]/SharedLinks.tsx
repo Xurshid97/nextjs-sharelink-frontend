@@ -72,6 +72,7 @@ function SharedLinks({ params }: { params: { categoryId: number } }) {
                     renderItem={(link) => (
                         <Card
                             className="card-links"
+
                             key={link.id} // Add key prop here
                             cover={
                                 link.image ? (
