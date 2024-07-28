@@ -83,7 +83,7 @@ function UserPage() {
 
     return (
         <div>
-            {children}
+            {/* {children} */}
             <br />
             {location === "/user/login" && (
                 <Link href="user/register">Register</Link>
