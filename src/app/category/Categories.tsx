@@ -158,7 +158,7 @@ function Categories() {
                             dataSource={categories.reverse()}
                             renderItem={(category: Category) => (
                                 <Card
-                                    key={category.id}
+                                    key={category.id || 0}
                                     className="category-card"
                                     style={{ marginBottom: "16px" }}
                                     actions={[
