@@ -1,12 +1,13 @@
 import React from "react";
 import { Breadcrumb } from "antd";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation"; // Import usePathname
 
 const Breadcrumbs: React.FC = () => {
-    const router = useRouter();
-    const pathname = router?.pathname || "/";
-    const pathSnippets = pathname.split("/").filter((i) => i);
+    const pathname = usePathname(); // Use usePathname to get the current pathname
+
+    // Safeguard against empty or root pathname
+    const pathSnippets = pathname === "/" ? [] : pathname.split("/").filter((i) => i);
 
     const breadcrumbNameMap: { [key: string]: string } = {
         "/category": "Categories",
