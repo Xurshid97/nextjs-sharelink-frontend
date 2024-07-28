@@ -17,7 +17,7 @@ interface UserData {
     image: string;
 }
 
-export default function UserPage({ children }: { children: React.ReactNode }) {
+function UserPage() {
     const location = usePathname();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [imageFile, setImageFile] = useState<File | null>(null);
@@ -159,4 +159,6 @@ export default function UserPage({ children }: { children: React.ReactNode }) {
         </div>
     );
 }
+
+export default UserPage;
 
