@@ -145,7 +145,7 @@ function SharedCategories() {
                                 }}
                                 className="category-card"
                                 actions={[
-                                    <Popover title="Save to your categories">
+                                    <Popover key="save" title="Save to your categories">
                                         <AppstoreAddOutlined
                                             key="saveToMySelf"
                                             onClick={() =>
@@ -153,7 +153,7 @@ function SharedCategories() {
                                             }
                                         />
                                     </Popover>,
-                                    <Popover title="Remove from shared">
+                                    <Popover key="delete" title="Remove from shared">
                                         <DeleteFilled
                                             key="remove"
                                             onClick={() =>
