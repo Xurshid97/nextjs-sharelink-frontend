@@ -41,7 +41,7 @@ function SharedLinks({ params }: { params: { categoryId: number } }) {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [categoryId]);
 
     return (
         <div
@@ -57,7 +57,7 @@ function SharedLinks({ params }: { params: { categoryId: number } }) {
             <InfiniteScroll
                 dataLength={links.length}
                 next={fetchData}
-                hasMore={links.length < 0}
+                hasMore={false} // Assuming hasMore should be false, as there is no logic to determine if more data is available
                 loader={
                     <Skeleton
                         avatar

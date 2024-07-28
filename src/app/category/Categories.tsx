@@ -33,8 +33,7 @@ import "./Categories.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const { TextArea } = Input;
-
-const Text = Typography.Text;
+const { Text } = Typography;
 
 type Category = {
     id: number;
@@ -49,9 +48,7 @@ function Categories() {
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState<Category[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-        null
-    );
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
     const confirm = async (categoryId: number) => {
         await deleteCategory(CATEG_URL, categoryId);
@@ -80,22 +77,16 @@ function Categories() {
     };
 
     const editHandler = (category: Category) => {
-        // Create a copy of the category object to avoid direct state mutation
         setSelectedCategory({ ...category });
         setIsModalOpen(true);
     };
 
     const handleOk = async () => {
         if (selectedCategory) {
-            // Patch the category to the server
             await patchCategory(CATEG_URL, selectedCategory);
-
-            // Create a new array with the updated category
             const updatedCategories = categories.map(category =>
                 category.id === selectedCategory.id ? selectedCategory : category
             );
-
-            // Update the state with the new array
             setCategories(updatedCategories);
             setCondition(!condition);
         }
@@ -112,9 +103,7 @@ function Categories() {
             ...category,
             isPublic: !category.isPublic,
         });
-        messageApi.info(
-            `Link is ${category.isPublic ? "private" : "public"} now`
-        );
+        messageApi.info(`Link is ${category.isPublic ? "private" : "public"} now`);
     };
 
     const loadMoreData = async () => {
@@ -139,41 +128,18 @@ function Categories() {
     return (
         <div className="category_main">
             {contextHolder}
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "100%",
-                    marginBottom: "16px",
-                }}>
+            <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "16px" }}>
                 <CreateCategory setCategories={setCategories} />
             </div>
-            <div
-                id="scrollableDiv"
-                style={{
-                    maxHeight: "66vh",
-                    overflow: "auto",
-                    padding: "0 16px",
-                }}>
+            <div id="scrollableDiv" style={{ maxHeight: "66vh", overflow: "auto", padding: "0 16px" }}>
                 {loading ?
                     <List
                         dataSource={[1, 2, 3, 4, 5]}
                         renderItem={(num) => (
-                            <Card
-                                key={num}
-                                className="category-card">
-                                <br />
-                                <Skeleton
-                                    loading={loading}
-                                    avatar
-                                    active>
-                                    <Link
-                                        href={`${num}`}>
-                                        <Text
-                                            style={{
-                                                color: "blue",
-                                                fontWeight: "bold",
-                                            }}>
+                            <Card key={num} className="category-card">
+                                <Skeleton loading={loading} avatar active>
+                                    <Link href={`${num}`}>
+                                        <Text style={{ color: "blue", fontWeight: "bold" }}>
                                             {num}
                                         </Text>
                                     </Link>
@@ -182,19 +148,11 @@ function Categories() {
                         )}
                     /> :
                     <InfiniteScroll
-                        dataLength={categories && categories.length}
+                        dataLength={categories.length}
                         next={loadMoreData}
                         hasMore={categories.length < 0}
-                        loader={
-                            <Skeleton
-                                avatar
-                                paragraph={{ rows: 1 }}
-                                active
-                            />
-                        }
-                        endMessage={
-                            <Divider plain>It is all, nothing more 🤐</Divider>
-                        }
+                        loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+                        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                         scrollableTarget="scrollableDiv">
                         <List
                             dataSource={categories.reverse()}
@@ -202,19 +160,10 @@ function Categories() {
                                 <Card
                                     key={category.id}
                                     className="category-card"
-                                    style={{
-                                        marginBottom: "16px",
-                                    }}
+                                    style={{ marginBottom: "16px" }}
                                     actions={[
-                                        <ShareAltOutlined
-                                            onClick={() =>
-                                                handleShareClick(category)
-                                            }
-                                        />,
-                                        <EditFilled
-                                            key="edit"
-                                            onClick={() => editHandler(category)}
-                                        />,
+                                        <ShareAltOutlined onClick={() => handleShareClick(category)} />,
+                                        <EditFilled key="edit" onClick={() => editHandler(category)} />,
                                         <Popconfirm
                                             title="Delete the task"
                                             description="Are you sure to delete this category?"
@@ -224,38 +173,17 @@ function Categories() {
                                             cancelText="No">
                                             <DeleteFilled key="delete" />
                                         </Popconfirm>,
-                                        <Popover
-                                            title={
-                                                category.isPublic
-                                                    ? "public"
-                                                    : "private"
-                                            }
-                                            key="visibility">
+                                        <Popover title={category.isPublic ? "public" : "private"} key="visibility">
                                             {category.isPublic ? (
-                                                <UnlockFilled
-                                                    onClick={() =>
-                                                        makePublic(category)
-                                                    }
-                                                />
+                                                <UnlockFilled onClick={() => makePublic(category)} />
                                             ) : (
-                                                <LockFilled
-                                                    onClick={() =>
-                                                        makePublic(category)
-                                                    }
-                                                />
+                                                <LockFilled onClick={() => makePublic(category)} />
                                             )}
                                         </Popover>,
                                     ]}>
-                                    <Skeleton
-                                        loading={loading}
-                                        avatar
-                                        active>
+                                    <Skeleton loading={loading} avatar active>
                                         <Link href={`category/links?categoryId=${category.id}`}>
-                                            <Text
-                                                style={{
-                                                    color: "blue",
-                                                    fontWeight: "bold",
-                                                }}>
+                                            <Text style={{ color: "blue", fontWeight: "bold" }}>
                                                 <FastForwardOutlined /> <span>{category.name}</span>
                                             </Text>
                                         </Link>
@@ -269,9 +197,7 @@ function Categories() {
                             onOk={handleOk}
                             onCancel={handleCancel}>
                             <TextArea
-                                style={{
-                                    minHeight: "100px",
-                                }}
+                                style={{ minHeight: "100px" }}
                                 value={selectedCategory?.name || ""}
                                 onChange={(e) => {
                                     const updatedCategory = {
