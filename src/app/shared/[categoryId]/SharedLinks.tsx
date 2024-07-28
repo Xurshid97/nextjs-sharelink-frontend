@@ -72,6 +72,7 @@ function SharedLinks({ params }: { params: { categoryId: number } }) {
                     renderItem={(link) => (
                         <Card
                             className="card-links"
+                            key={link.id}
                             cover={
                                 link.image ? (
                                     // null ? (
@@ -90,8 +91,7 @@ function SharedLinks({ params }: { params: { categoryId: number } }) {
                                 ) : (
                                     <ShareAltOutlined />
                                 )
-                            }
-                            key={link.id}>
+                            }>
                             <div className="link-details">
                                 <Card
                                     style={{
