@@ -6,15 +6,18 @@ import { userCreateWithUsernameAndPassword } from "../../api/userAPI";
 import { getAccessToken, getStoredCategories } from "../../constants/storage";
 import "./Register.css";
 import { useRouter } from 'next/navigation'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RegisterForm = () => {
     const [form] = Form.useForm();
     const navigate = useRouter();
-    // const access_token = getAccessToken();
-    const access_token = "getAccessToken()";
+    const [access_token, setAccessToken] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null); // Image file state
     const [messageApi, contextHolder] = message.useMessage();
+
+    useEffect(() => {
+        setAccessToken(getAccessToken());
+    }, []);
 
     const onFinish = async (values: any) => {
         const formData = new FormData();
