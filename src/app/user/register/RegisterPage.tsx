@@ -34,7 +34,7 @@ const RegisterForm = () => {
                     navigate.push("/user/login");
                 }
                 else if (token.message === "User saved successfully.") {
-                    localStorage.setItem("Access token Sharelink", token.access_token);
+                    // localStorage.setItem("Access token Sharelink", token.access_token);
                     navigate.push("/user");
                 }
             } else {
