@@ -125,7 +125,7 @@ function PublicCategories() {
                                         avatar
                                         active>
                                         <Link
-                                            href={`global/${(category as { username: string }).username}`}>
+                                            href={`global/${(category as { username: string }).username}/${(category as { globalcategory: string }).globalcategory}/${(category as { name: string }).name}`}>
                                             <Text
                                                 style={{
                                                     color: "blue",
