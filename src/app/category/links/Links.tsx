@@ -76,7 +76,7 @@ function Links() {
 
     const fetchData = async () => {
         try {
-            const access_token = getAccessToken();
+            const access_token = "getAccessToken()";
             if (access_token) {
                 setLoading(true);
                 const linksData = await getLinks(LINKS_URL, Number(categoryId)); // Convert categoryId to number
