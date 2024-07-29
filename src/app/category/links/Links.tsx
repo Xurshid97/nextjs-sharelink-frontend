@@ -1,6 +1,6 @@
 "use client"
 import "./Links.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { getAccessToken } from "../../constants/storage";
 import { deleteLink, getLinks, patchLink } from "../../api/linksAPI";
 import { LINKS_URL, changed_img } from "../../constants/urls";
@@ -32,7 +32,7 @@ interface LinkData {
 
 const { TextArea } = Input;
 
-function Links() {
+function LinksComponent() {
     const [links, setLinks] = useState<LinkData[]>([]);
     const [loading, setLoading] = useState(false);
     const searchParams = useSearchParams()
@@ -76,7 +76,7 @@ function Links() {
 
     const fetchData = async () => {
         try {
-            const access_token = "getAccessToken()";
+            const access_token = getAccessToken();
             if (access_token) {
                 setLoading(true);
                 const linksData = await getLinks(LINKS_URL, Number(categoryId)); // Convert categoryId to number
@@ -289,6 +289,14 @@ function Links() {
                 onOk={handleOk}
                 onCancel={handleCancel}></Modal>
         </div>
+    );
+}
+
+function Links() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <LinksComponent />
+        </Suspense>
     );
 }
 
