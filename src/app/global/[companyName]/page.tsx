@@ -8,7 +8,7 @@ import {
     List,
 } from "antd";
 import Link from "next/link";
-import { getGlobalCategories } from "../api/categoriesAPI";
+import { getGlobalCategories } from "../../api/categoriesAPI";
 import InfiniteScroll from "react-infinite-scroll-component";
 const Text = Typography.Text;
 
@@ -20,9 +20,10 @@ type Category = {
     username: string;
 };
 
-function PublicCategories() {
+function PublicCategoryNames({ params }: { params: { companyName: string } }) {
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
+    const companyName = params.companyName.split("%20").join(" ");
 
     const loadMoreData = async () => {
         setLoading(true);
@@ -103,14 +104,16 @@ function PublicCategories() {
                         scrollableTarget="scrollableDiv">
                         <List
                             dataSource={categories}
-                            renderItem={(category: Category) => (
-                                <Card
-                                    key={category.id}
-                                    className="category-card"
-                                    style={{
-                                        marginBottom: "16px",
-                                    }}>
-                                    {/* <Text
+                            renderItem={(category: Category) => {
+                                if (category.username === companyName) {
+                                    return (
+                                        <Card
+                                            key={category.id}
+                                            className="category-card"
+                                            style={{
+                                                marginBottom: "16px",
+                                            }}>
+                                            {/* <Text
                                 style={{
                                     fontWeight: "bold",
                                 }}>
@@ -120,23 +123,25 @@ function PublicCategories() {
                                           .username
                                     : "Anonymous"}
                             </Text> */}
-                                    <Skeleton
-                                        loading={loading}
-                                        avatar
-                                        active>
-                                        <Link
-                                            href={`global/${(category as { username: string }).username}`}>
-                                            <Text
-                                                style={{
-                                                    color: "blue",
-                                                    fontWeight: "bold",
-                                                }}>
-                                                {(category as { name: string }).name}
-                                            </Text>
-                                        </Link>
-                                    </Skeleton>
-                                </Card>
-                            )}
+                                            <Skeleton
+                                                loading={loading}
+                                                avatar
+                                                active>
+                                                <Link
+                                                    href={`${(category as { username: string }).username}/${(category as { globalcategory: string }).globalcategory}`}>
+                                                    <Text
+                                                        style={{
+                                                            color: "blue",
+                                                            fontWeight: "bold",
+                                                        }}>
+                                                        {(category as { name: string }).name}
+                                                    </Text>
+                                                </Link>
+                                            </Skeleton>
+                                        </Card>
+                                    )
+                                }
+                            }}
                         />
                     </InfiniteScroll>
             }
@@ -144,4 +149,4 @@ function PublicCategories() {
     );
 }
 
-export default PublicCategories;
+export default PublicCategoryNames;

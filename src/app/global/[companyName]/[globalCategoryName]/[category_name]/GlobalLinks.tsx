@@ -1,8 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
-import { getAccessToken } from "../../constants/storage";
-import { getLinks } from "../../api/linksAPI";
-import { LINKS_URL, changed_img } from "../../constants/urls";
+import { getAccessToken } from "../../../../constants/storage";
+import { getLinks } from "../../../../api/linksAPI";
+import { CATEG_URL, LINKS_URL, changed_img } from "../../../../constants/urls";
 import Link from "next/link";
 import {
     Avatar,
@@ -16,6 +16,7 @@ import Meta from "antd/es/card/Meta";
 import { ShareAltOutlined, ExportOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from './styles.module.css'
+import { getGlobalCategories } from "@/app/api/categoriesAPI";
 
 interface LinkData {
     id: number;
@@ -23,21 +24,24 @@ interface LinkData {
     url: string;
     image: File | string;
     description: string;
+    category_name: string;
+    name: string;
+    links: Array<LinkData>;
 }
 
-function Links({ params }: { params: { categoryId: number } }) {
+function Links({ params }: { params: { category_name: string } }) {
     const [links, setLinks] = useState<LinkData[]>([]);
     const [loading, setLoading] = useState(false);
-    const publicCategoryId = params.categoryId
-
+    const publicCategory_name = params.category_name.split("%20").join(" ");
     const fetchData = async () => {
         setLoading(true);
         try {
-            const access_token = getAccessToken();
-            if (access_token) {
-                const linksData = await getLinks(LINKS_URL, Number(publicCategoryId)); // Convert categoryId to number
-                setLinks(linksData.links);
-            }
+            const categoriesData = await getGlobalCategories();
+            categoriesData.categories.forEach((category: LinkData) => {
+                if (category.name === publicCategory_name) {
+                    setLinks(category.links);
+                }
+            });
         } catch (error) {
             console.error("Error fetching links:", error);
         }
@@ -46,7 +50,7 @@ function Links({ params }: { params: { categoryId: number } }) {
 
     useEffect(() => {
         fetchData();
-    }, [publicCategoryId]);
+    }, [publicCategory_name]);
 
     return (
         <div
@@ -118,7 +122,7 @@ function Links({ params }: { params: { categoryId: number } }) {
                                                 icon={
                                                     <img
                                                         src={changed_img + link.image ? changed_img + link.image : "#"}
-                                                        alt="Image"
+                                                        alt={link.title}
                                                         style={{
                                                             width: "100%",
                                                             height: "100%",  // Ensure the image takes full height
@@ -144,10 +148,19 @@ function Links({ params }: { params: { categoryId: number } }) {
                                                         href={`${link.url}`}
                                                         target={"_blank"}
                                                         rel="noopener noreferrer">
-                                                        {link.title}
-                                                        <ExportOutlined style={{
-                                                            marginLeft: "8px",
-                                                        }} />
+                                                        <div
+                                                            style={{
+                                                                display: "inline-block",
+                                                                whiteSpace: "normal",
+                                                                wordWrap: "break-word",
+                                                            }}
+                                                        >
+                                                            {link.title}
+                                                            <ExportOutlined style={{
+                                                                marginLeft: "8px",
+                                                            }} />
+                                                        </div>
+
                                                         <p
                                                             style={{
                                                                 fontSize: "12px",

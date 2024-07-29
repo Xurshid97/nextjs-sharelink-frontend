@@ -39,7 +39,13 @@
     padding: 0 10px 5px 10px;
 }
 
-@media screen and (max-width: 608px) {
+@media screen and (max-width: 1024px) {
+    .cardLinks {
+        width: 48%;
+    }
+}
+
+@media screen and (max-width: 768px) {
     .cardLinks {
         width: 100%;
     }
