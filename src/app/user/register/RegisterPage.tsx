@@ -11,7 +11,8 @@ import { useState } from "react";
 const RegisterForm = () => {
     const [form] = Form.useForm();
     const navigate = useRouter();
-    const access_token = getAccessToken();
+    // const access_token = getAccessToken();
+    const access_token = "getAccessToken()";
     const [imageFile, setImageFile] = useState<File | null>(null); // Image file state
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -34,7 +35,7 @@ const RegisterForm = () => {
                     navigate.push("/user/login");
                 }
                 else if (token.message === "User saved successfully.") {
-                    // localStorage.setItem("Access token Sharelink", token.access_token);
+                    localStorage.setItem("Access token Sharelink", token.access_token);
                     navigate.push("/user");
                 }
             } else {
