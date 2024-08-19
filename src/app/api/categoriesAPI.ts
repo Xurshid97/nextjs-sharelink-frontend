@@ -103,9 +103,20 @@ export async function deleteCategory(url: string, id: number): Promise<any> {
     }
 }
 
+interface LinkData {
+    id: number;
+    title: string;
+    url: string;
+    image: string; // Assuming image is a URL string
+    description: string;
+    category_name: string;
+    name: string;
+    links: LinkData[]; // Recursive type definition
+}
 
 // Define the expected shape of the categories data
 interface Category {
+  links: LinkData[];
   id: number;
   name: string;
   globalcategory: string;
