@@ -1,9 +1,7 @@
-import { GetServerSideProps } from "next";
-import { Avatar, Card, Divider, List, Skeleton } from "antd";
+import { Avatar, Card, List, Skeleton } from "antd";
 import Link from "next/link";
 import Meta from "antd/es/card/Meta";
 import { ShareAltOutlined, ExportOutlined } from "@ant-design/icons";
-import { getGlobalCategories } from "@/app/api/categoriesAPI";
 import { changed_img } from "../../../../constants/urls";
 import styles from './styles.module.css';
 
@@ -11,28 +9,11 @@ interface LinkData {
     id: number;
     title: string;
     url: string;
-    image: string; // Assuming image is a URL string
+    image: string;
     description: string;
     category_name: string;
     name: string;
-    links: LinkData[]; // Recursive type definition
-}
-
-interface Category {
-    id: number;
-    name: string;
-    globalcategory: string;
-    isPublic: boolean;
-    username: string;
-    links: {
-        id: number;
-        title: string;
-        url: string;
-        image: string; // Adjusted to string
-        description: string;
-        category_name: string;
-        name: string;
-    }[];
+    links: LinkData[];
 }
 
 interface LinksProps {
@@ -50,8 +31,7 @@ const Links = ({ links, category_name }: LinksProps) => {
                 justifyContent: "center",
                 width: "100%",
             }}>
-           
-           <div
+            <div
                 id="scrollableDiv"
                 style={{
                     height: "70vh",
@@ -147,36 +127,6 @@ const Links = ({ links, category_name }: LinksProps) => {
             </div>
         </div>
     );
-};
-
-// Server-side data fetching
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { category_name } = context.query;
-
-    let links: LinkData[] = [];
-    let categoryName = Array.isArray(category_name) ? category_name[0] : category_name;
-
-    try {
-        const categoriesData = await getGlobalCategories();
-        const category = categoriesData.categories.find((cat: Category) => cat.name === categoryName);
-
-        if (category) {
-            links = category.links.map(link => ({
-                ...link,
-                // Make sure the image property is a string
-                image: typeof link.image === 'string' ? link.image : '',
-            }));
-        }
-    } catch (error) {
-        console.error("Error fetching categories:", error);
-    }
-
-    return {
-        props: {
-            links,
-            category_name: categoryName || "",
-        },
-    };
 };
 
 export default Links;

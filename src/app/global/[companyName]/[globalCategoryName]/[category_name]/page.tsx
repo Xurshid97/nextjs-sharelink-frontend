@@ -1,17 +1,17 @@
-import { GetServerSideProps } from "next";
-import Links from "./GlobalLinks";
 import { getGlobalCategories } from "@/app/api/categoriesAPI";
+import Links from "./GlobalLinks";
 
 interface LinkData {
     id: number;
     title: string;
     url: string;
-    image: string; // Assuming image is a URL string
+    image: string;
     description: string;
     category_name: string;
     name: string;
-    links: LinkData[]; // Recursive type definition
+    links: LinkData[];
 }
+
 interface Category {
     id: number;
     name: string;
@@ -22,34 +22,20 @@ interface Category {
         id: number;
         title: string;
         url: string;
-        image: string; // Adjusted to string
+        image: string;
         description: string;
         category_name: string;
         name: string;
     }[];
 }
-interface HomeProps {
-    links: LinkData[];
-    category_name: string;
-}
 
-export default function Home({ links, category_name }: HomeProps) {
-    return (
-        <>
-            <Links links={links} category_name={category_name} />
-        </>
-    );
-}
-
-// Server-side data fetching
-export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
-    const { category_name } = context.query;
+export default async function Page({ params }: { params: { category_name: string } }) {
+    const { category_name } = params;
     let links: LinkData[] = [];
-    let categoryName = Array.isArray(category_name) ? category_name[0] : category_name;
 
     try {
         const categoriesData = await getGlobalCategories();
-        const category = categoriesData.categories.find((cat: Category) => cat.name === categoryName);
+        const category = categoriesData.categories.find((cat: Category) => cat.name === category_name);
 
         if (category) {
             links = category.links.map(link => ({
@@ -61,10 +47,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async (context)
         console.error("Error fetching categories:", error);
     }
 
-    return {
-        props: {
-            links,
-            category_name: categoryName || "",
-        },
-    };
-};
+    return (
+        <Links links={links} category_name={category_name} />
+    );
+}
