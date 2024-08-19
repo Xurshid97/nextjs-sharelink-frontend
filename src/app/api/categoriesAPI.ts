@@ -104,18 +104,30 @@ export async function deleteCategory(url: string, id: number): Promise<any> {
 }
 
 
-export async function getGlobalCategories(): Promise<any> {
-    const headers = {
-        Authorization: `global_categories`,
-        "Content-Type": "application/json",
-    };
+// Define the expected shape of the categories data
+interface Category {
+  id: number;
+  name: string;
+  globalcategory: string;
+  isPublic: boolean;
+  username: string;
+}
 
-    try {
-        const response: AxiosResponse = await axios.get(CATEG_URL, {
-            headers,
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+interface CategoriesResponse {
+  categories: Category[];
+}
+
+export async function getGlobalCategories(): Promise<CategoriesResponse> {
+  const headers = {
+    Authorization: `global_categories`, // Ensure this is valid and needed
+    "Content-Type": "application/json",
+  };
+
+  try {
+    const response: AxiosResponse<CategoriesResponse> = await axios.get(CATEG_URL, { headers });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw new Error("Failed to fetch categories"); // Customize error message as needed
+  }
 }
