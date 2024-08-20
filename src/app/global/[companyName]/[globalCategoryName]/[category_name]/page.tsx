@@ -31,6 +31,7 @@ interface Category {
 
 export default async function Page({ params }: { params: { category_name: string } }) {
     const { category_name } = params;
+    console.log("category_name", category_name)
     let links: LinkData[] = [];
 
     try {
