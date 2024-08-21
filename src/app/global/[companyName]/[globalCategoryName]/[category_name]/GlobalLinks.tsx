@@ -15,6 +15,7 @@ import { ShareAltOutlined, ExportOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from './styles.module.css'
 import { getGlobalCategories } from "@/app/api/categoriesAPI";
+
 interface LinkData {
     id: number;
     title: string;
@@ -24,30 +25,49 @@ interface LinkData {
     category_name: string;
     name: string;
     links: Array<LinkData>;
-    categories: Array<LinkData>;
-  }
-  
-  async function Links({ params }: { params: { category_name: string } }) {
+    categories?: Array<LinkData>;
+}
+
+
+interface Category {
+    id: number;
+    name: string;
+    links: Array<LinkData>;
+    // other properties...
+}
+
+interface CategoriesResponse {
+    categories: Category[];
+}
+
+async function Links({ params }: { params: { category_name: string } }) {
     let links: LinkData[] = [];
     let loading: boolean = false;
     const publicCategory_name = params?.category_name?.split("%20").join(" ");
-  
+
     const fetchData = async () => {
-      loading = true;
-      try {
-        const categoriesData: LinkData[] = await getGlobalCategories(); // Await the result
-        categoriesData?.forEach((category: LinkData) => {
-          if (category.name === publicCategory_name) {
-            links = category.links;
-          }
-        });
-      } catch (error) {
-        console.error("Error fetching links:", error);
-      }
-      loading = false;
+        loading = true;
+        try {
+            const response = await getGlobalCategories();
+            const categoriesData = response.categories;
+
+            categoriesData.forEach((category) => {
+                if (category.name === publicCategory_name) {
+                    links = category.links.map(link => ({
+                        ...link,
+                        category_name: category.name, // or other transformations
+                    }));
+                }
+            });
+        } catch (error) {
+            console.error("Error fetching links:", error);
+        }
+        loading = false;
     };
-  
+
     await fetchData();
+
+    // Rest of your component logic here
     return (
         <div
             style={{
