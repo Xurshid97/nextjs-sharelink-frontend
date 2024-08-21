@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 import { Avatar, Card, List, Skeleton } from "antd";
+=======
+import { getAccessToken } from "../../../../constants/storage";
+import { getLinks } from "../../../../api/linksAPI";
+import { CATEG_URL, LINKS_URL, changed_img } from "../../../../constants/urls";
+>>>>>>> 1a2636a (global links server side rendering)
 import Link from "next/link";
 import Meta from "antd/es/card/Meta";
 import { ShareAltOutlined, ExportOutlined } from "@ant-design/icons";
 import { changed_img } from "../../../../constants/urls";
 import styles from './styles.module.css';
 
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 interface LinkData {
     id: number;
     title: string;
@@ -13,6 +20,7 @@ interface LinkData {
     description: string;
     category_name: string;
     name: string;
+<<<<<<< HEAD
     links: LinkData[];
 }
 
@@ -22,6 +30,33 @@ interface LinksProps {
 }
 
 const Links = ({ links, category_name }: LinksProps) => {
+=======
+    links: Array<LinkData>;
+    categories: Array<LinkData>;
+  }
+  
+  async function Links({ params }: { params: { category_name: string } }) {
+    let links: LinkData[] = [];
+    let loading: boolean = false;
+    const publicCategory_name = params?.category_name?.split("%20").join(" ");
+  
+    const fetchData = async () => {
+      loading = true;
+      try {
+        const categoriesData: LinkData[] = await getGlobalCategories(); // Await the result
+        categoriesData?.forEach((category: LinkData) => {
+          if (category.name === publicCategory_name) {
+            links = category.links;
+          }
+        });
+      } catch (error) {
+        console.error("Error fetching links:", error);
+      }
+      loading = false;
+    };
+  
+    await fetchData(); 
+>>>>>>> 1a2636a (global links server side rendering)
     return (
         <div
             style={{
