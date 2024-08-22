@@ -1,4 +1,5 @@
 // "use server"
+// some changes made on current branch
 import { getGlobalCategories } from "../../../../api/categoriesAPI";
 import PublicCategoriesList from './GlobalLinksList'; // Import the client component
 
