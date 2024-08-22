@@ -21,15 +21,20 @@ type Category = {
     username: string;
 };
 
+
+interface CategoriesResponse {
+    categories: Category[]; // Assuming the API response has this structure
+}
+
 function PublicCategoryNames({ params }: { params: { globalCategoryName: string } }) {
     const [loading, setLoading] = useState(false);
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const globalCategoryName = params.globalCategoryName.split("%20").join(" ");
 
     const loadMoreData = async () => {
         setLoading(true);
         try {
-            const categoriesData = await getGlobalCategories();
+            const categoriesData: CategoriesResponse = await getGlobalCategories();
             setCategories(categoriesData.categories);
         } catch (error) {
             console.error("Error fetching categories:", error);
