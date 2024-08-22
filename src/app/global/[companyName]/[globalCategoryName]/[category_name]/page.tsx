@@ -1,10 +1,10 @@
-import Links from "./GlobalLinks";
+import PublicCategories from "./GlobalLinks";
 
 export default function Home({ params }: { params: { category_name: string } }) {
 
     return (
         <>
-            <Links params={{ category_name: params.category_name }} />
+            <PublicCategories params={{ category_name: params.category_name }} />
         </>
     );
 }
