@@ -1,132 +1,44 @@
-import { Avatar, Card, List, Skeleton } from "antd";
-import Link from "next/link";
-import Meta from "antd/es/card/Meta";
-import { ShareAltOutlined, ExportOutlined } from "@ant-design/icons";
-import { changed_img } from "../../../../constants/urls";
-import styles from './styles.module.css';
+// "use server"
+import { getGlobalCategories } from "../../../../api/categoriesAPI";
+import PublicCategoriesList from './GlobalLinksList'; // Import the client component
 
 interface LinkData {
     id: number;
     title: string;
     url: string;
-    image: string;
+    image: File | string;
     description: string;
     category_name: string;
     name: string;
-    links: LinkData[];
+    links: Array<LinkData>;
 }
 
-interface LinksProps {
-    links: LinkData[];
-    category_name: string;
+// Assuming that the getGlobalCategories() returns a response that looks like this:
+interface Category {
+    id: number;
+    name: string;
+    links: LinkData[]; // Array of links
 }
 
-const Links = ({ links, category_name }: LinksProps) => {
-    return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-            }}>
-            <div
-                id="scrollableDiv"
-                style={{
-                    height: "70vh",
-                    width: "100%",
-                    overflow: "auto",
-                    padding: "0 16px",
-                    border: "none",
-                }}>
-                {links.length === 0 ? (
-                    <Skeleton avatar paragraph={{ rows: 2 }} active />
-                ) : (
-                    <List
-                        className={styles.cardsParent}
-                        dataSource={links}
-                        renderItem={(link) => (
-                            <Card
-                                className={styles.cardLinks}
-                                cover={
-                                    link.image ? (
-                                        <Avatar
-                                            size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                                            style={{
-                                                width: "100%",
-                                                border: "none",
-                                                height: "100%",
-                                                padding: "5px",
-                                                backgroundColor: "transparent",
-                                            }}
-                                            icon={
-                                                <img
-                                                    src={changed_img + link.image}
-                                                    alt={link.title}
-                                                    style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        objectFit: "cover",
-                                                        borderRadius: "8px",
-                                                    }}
-                                                />}
-                                        />
-                                    ) : (
-                                        <ShareAltOutlined />
-                                    )
-                                }
-                                key={link.id}>
-                                <div className="link-details">
-                                    <Card
-                                        style={{
-                                            border: "none",
-                                            width: "100%",
-                                        }}>
-                                        <Meta
-                                            title={
-                                                <Link
-                                                    href={`${link.url}`}
-                                                    target={"_blank"}
-                                                    rel="noopener noreferrer">
-                                                    <div
-                                                        style={{
-                                                            display: "inline-block",
-                                                            whiteSpace: "normal",
-                                                            wordWrap: "break-word",
-                                                        }}
-                                                    >
-                                                        {link.title}
-                                                        <ExportOutlined style={{
-                                                            marginLeft: "8px",
-                                                        }} />
-                                                    </div>
+interface CategoriesResponse {
+    categories: Category[]; // Assuming the API response has this structure
+}
 
-                                                    <p
-                                                        style={{
-                                                            fontSize: "12px",
-                                                            color: "gray",
-                                                            marginTop: "1px",
-                                                            marginBottom: "1px",
-                                                        }}>
-                                                        {link.url.split("/")[2] === 't.me' ?
-                                                            link.url.split("//")[1] :
-                                                            link.url.split("//")[0] + "//" + link.url.split("/")[2]
-                                                        }
-                                                    </p>
-                                                </Link>
-                                            }
-                                            description={link.description}
-                                        />
-                                    </Card>
-                                </div>
-                            </Card>
-                        )}
-                    />
-                )}
-            </div>
-        </div>
-    );
-};
+export default async function PublicCategories({ params }: { params: { category_name: string } }) {
+    const publicCategory_name = params.category_name.split("%20").join(" ");
+    try {
+        const categoriesData: CategoriesResponse = await getGlobalCategories();
+        let links: LinkData[] = [];
 
-export default Links;
+        categoriesData.categories.forEach((category) => {
+            if (category.name === publicCategory_name) {
+                links = category.links;
+            }
+        });
+
+        return <PublicCategoriesList links={links} />;
+    } catch (error) {
+        console.error("Error fetching categories:", error);
+        return <div>Error loading categories</div>;
+    }
+}
