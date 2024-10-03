@@ -26,7 +26,6 @@ interface CategoriesResponse {
 }
 
 export default async function PublicCategories({ params }: { params: { category_name: string } }) {
-    console.log("Params:", params.category_name);
     let publicCategory_name = params.category_name.split("%20").join(" ");
     publicCategory_name = publicCategory_name.split("%2C").join(",");
     try {
