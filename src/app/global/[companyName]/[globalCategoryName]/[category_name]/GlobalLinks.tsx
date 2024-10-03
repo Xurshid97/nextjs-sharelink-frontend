@@ -1,7 +1,7 @@
-// "use server"
-// some changes made on current branch
+
 import { getGlobalCategories } from "../../../../api/categoriesAPI";
-import PublicCategoriesList from './GlobalLinksList'; // Import the client component
+import Links from "./GlobalLinksList";
+
 
 interface LinkData {
     id: number;
@@ -26,7 +26,9 @@ interface CategoriesResponse {
 }
 
 export default async function PublicCategories({ params }: { params: { category_name: string } }) {
-    const publicCategory_name = params.category_name.split("%20").join(" ");
+    console.log("Params:", params.category_name);
+    let publicCategory_name = params.category_name.split("%20").join(" ");
+    publicCategory_name = publicCategory_name.split("%2C").join(",");
     try {
         const categoriesData: CategoriesResponse = await getGlobalCategories();
         let links: LinkData[] = [];
@@ -37,7 +39,7 @@ export default async function PublicCategories({ params }: { params: { category_
             }
         });
 
-        return <PublicCategoriesList links={links} />;
+        return <Links links={links} />;
     } catch (error) {
         console.error("Error fetching categories:", error);
         return <div>Error loading categories</div>;

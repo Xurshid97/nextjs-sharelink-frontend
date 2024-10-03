@@ -1,8 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
-import { getAccessToken } from "../../../../constants/storage";
-import { getLinks } from "../../../../api/linksAPI";
-import { CATEG_URL, LINKS_URL, changed_img } from "../../../../constants/urls";
+import { changed_img } from "../../../../constants/urls";
 import Link from "next/link";
 import {
     Avatar,
@@ -16,7 +13,6 @@ import Meta from "antd/es/card/Meta";
 import { ShareAltOutlined, ExportOutlined } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import styles from './styles.module.css'
-import { getGlobalCategories } from "@/app/api/categoriesAPI";
 
 interface LinkData {
     id: number;
@@ -31,26 +27,6 @@ interface LinkData {
 
 function Links({ links }: { links: LinkData[] }) {
     const loading = !links.length;
-    // const [loading, setLoading] = useState(false);
-    // const publicCategory_name = params.category_name.split("%20").join(" ");
-    // const fetchData = async () => {
-    //     setLoading(true);
-    //     try {
-    //         const categoriesData = await getGlobalCategories();
-    //         categoriesData.categories.forEach((category: LinkData) => {
-    //             if (category.name === publicCategory_name) {
-    //                 setLinks(category.links);
-    //             }
-    //         });
-    //     } catch (error) {
-    //         console.error("Error fetching links:", error);
-    //     }
-    //     setLoading(false);
-    // };
-
-    // useEffect(() => {
-    //     fetchData();
-    // }, [publicCategory_name]);
     const fetchData = ()=>{}
     return (
         <div
