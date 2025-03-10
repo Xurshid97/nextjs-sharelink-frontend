@@ -23,6 +23,8 @@ export default function PublicCategories({ categories }: { categories: Category[
                 height: "70vh",
                 overflow: "auto",
                 padding: "0 16px",
+                position: "relative",
+                zIndex: 100,
             }}>
             {
                 loading ?
