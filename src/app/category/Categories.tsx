@@ -131,7 +131,7 @@ function Categories() {
             <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "16px", position: 'relative', zIndex: 100 }}>
                 <CreateCategory setCategories={setCategories} />
             </div>
-            <div id="scrollableDiv" style={{ maxHeight: "66vh", overflow: "auto", padding: "0 16px" }}>
+            <div id="scrollableDiv" style={{ maxHeight: "66vh", overflow: "auto", padding: "0 16px", position: 'relative', zIndex: 100 }}>
                 {loading ?
                     <List
                         dataSource={[1, 2, 3, 4, 5]}
