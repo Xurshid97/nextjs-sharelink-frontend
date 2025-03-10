@@ -137,6 +137,8 @@ function UserPage() {
                         style={{
                             display: "flex",
                             gap: 10,
+                            position: 'relative',
+                            zIndex: 98,
                         }}>
                         <Link href="user/login">Login</Link>
                         <Link href="user/register">Register</Link>

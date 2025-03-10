@@ -1,5 +1,5 @@
 export const changed = "https://kerakli.space/";
-// export const changed = "http://127.0.0.1:8000/";
+// export const changed = "http://localhost:3000/";
 export const BASE_URL = `${changed}`;
 export const CATEG_URL = `${changed}categories/`;
 export const LINKS_URL = `${changed}links/`;

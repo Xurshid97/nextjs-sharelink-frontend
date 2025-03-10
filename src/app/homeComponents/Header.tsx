@@ -9,45 +9,16 @@ import { Button, Layout, theme } from "antd";
 import Breadcrumbs from "./breadcrumb";
 
 const { Header } = Layout;
-export default function HeaderNav() {
+
+interface HeaderNavProps {
+    collapsed: boolean;
+    handleToggle: () => void;
+}
+
+export default function HeaderNav({ collapsed, handleToggle }:HeaderNavProps) {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
-    const [collapsedWidth, setCollapsedWidth] = useState(40); // default width for large screens
-
-    const [collapsed, setCollapsed] = useState(true);
-
-    useEffect(() => {
-        // telegr.ready()
-        const handleResize = () => {
-            if (window.innerWidth < 600) {
-                setCollapsed(true);
-                setCollapsedWidth(0); // collapse completely on small screens
-            } else {
-                setCollapsed(true);
-                setCollapsedWidth(40); // only icons on large screens
-            }
-        };
-
-        window.addEventListener("resize", handleResize);
-        handleResize(); // call the function initially
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    const handleToggle = () => {
-        if (window.innerWidth < 600) {
-            if (collapsedWidth === 0) {
-                setCollapsedWidth(collapsed ? 40 : 0);
-            } else {
-                setCollapsedWidth(0);
-                setCollapsed(true);
-            }
-        } else {
-            setCollapsed(!collapsed);
-            setCollapsedWidth(collapsed ? 200 : 40);
-        }
-    };
     return (
         <Header
             style={{

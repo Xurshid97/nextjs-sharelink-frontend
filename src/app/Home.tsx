@@ -1,36 +1,21 @@
 import "./homeComponents/Home.css";
 import { Layout } from "antd";
-import SiderBar from "./homeComponents/Sider";
-import HeaderNav from "./homeComponents/Header";
 import Content from "antd/lib/layout/layout";
+import HomeClientWrapper from "./homeComponents/HomeClientWrapper";
 
+interface HomeProps {
+    children: React.ReactNode;
+}
 
-function Home({ children }: Readonly<{ children: React.ReactNode }>) {
+function Home({ children }: Readonly<HomeProps>) {
     return (
-        <div
-            style={{
-                height: "100%",
-            }}
-        >
-            <Layout style={{
-                height: "100vh",
-                width: "100%",
-            }}>
-                <SiderBar />
+            <Layout style = {{height: '100vh'}}>
+                <HomeClientWrapper />
 
-                <Layout>
-                    <HeaderNav />
-
-                    <Content
-                        style={{
-                            margin: "24px 16px",
-                            padding: 24,
-                        }}>
-                        {children}
-                    </Content>
-                </Layout>
+                <Content style={{padding: '10% 20% !important',}}>
+                    {children}
+                </Content>
             </Layout>
-        </div>
     );
 }
 

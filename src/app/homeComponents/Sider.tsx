@@ -17,54 +17,25 @@ import Breadcrumbs from "./breadcrumb";
 
 const { Header, Sider, Content } = Layout;
 
-export default function SiderBar() {
+interface SiderBarProps {
+    collapsed: boolean;
+}
+
+export default function SiderBar({collapsed} : SiderBarProps) {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
-    const [collapsedWidth, setCollapsedWidth] = useState(40); // default width for large screens
-
-    const [collapsed, setCollapsed] = useState(true);
-
-    useEffect(() => {
-        // telegr.ready()
-        const handleResize = () => {
-            if (window.innerWidth < 600) {
-                setCollapsed(true);
-                setCollapsedWidth(0); // collapse completely on small screens
-            } else {
-                setCollapsed(true);
-                setCollapsedWidth(40); // only icons on large screens
-            }
-        };
-
-        window.addEventListener("resize", handleResize);
-        handleResize(); // call the function initially
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    const handleToggle = () => {
-        if (window.innerWidth < 600) {
-            if (collapsedWidth === 0) {
-                setCollapsedWidth(collapsed ? 40 : 0);
-            } else {
-                setCollapsedWidth(0);
-                setCollapsed(true);
-            }
-        } else {
-            setCollapsed(!collapsed);
-            setCollapsedWidth(collapsed ? 200 : 40);
-        }
-    };
+    
     return (
         <Sider
-            className={`custom-sider ${collapsed ? "collapsed" : ""
-                }`}
             trigger={null}
             collapsible
             collapsed={collapsed}
-            collapsedWidth={collapsedWidth} // set the width when collapse
-        >
+
+            style = {{
+                height: '100vh',
+            }}
+            >
             <div className="demo-logo-vertical" />
             <Menu
                 theme="dark"
