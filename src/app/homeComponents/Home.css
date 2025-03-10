@@ -72,6 +72,9 @@
     width: 25px !important;
     height: 25px !important;
   }
+  .ant-layout.css-dev-only-do-not-override-1uq9j6g{
+    padding: 15% 5% !important;
+  }
 }
 
 @media (max-width: 340px){
@@ -85,6 +88,10 @@
   }
   :where(.css-dev-only-do-not-override-1r287do).ant-breadcrumb a{
     padding: 0;
+  }
+
+  .ant-layout.css-dev-only-do-not-override-1uq9j6g{
+    padding: 15% 5% !important;
   }
 }
   
