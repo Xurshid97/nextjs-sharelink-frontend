@@ -128,7 +128,7 @@ function Categories() {
     return (
         <div className="category_main">
             {contextHolder}
-            <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "16px", position: 'relative', zIndex: 99 }}>
+            <div style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: "16px", position: 'relative', zIndex: 100 }}>
                 <CreateCategory setCategories={setCategories} />
             </div>
             <div id="scrollableDiv" style={{ maxHeight: "66vh", overflow: "auto", padding: "0 16px" }}>

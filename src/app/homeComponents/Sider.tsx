@@ -34,6 +34,8 @@ export default function SiderBar({collapsed} : SiderBarProps) {
 
             style = {{
                 height: '100vh',
+                position: 'absolute',
+                zIndex: 100,
             }}
             >
             <div className="demo-logo-vertical" />

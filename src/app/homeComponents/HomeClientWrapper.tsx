@@ -8,7 +8,6 @@ export default function HomeClientWrapper() {
     const [collapsed, setCollapsed] = useState(true);
 
     const handleToggle = () => {
-        console.log("toggle");
         setCollapsed(!collapsed);
     };
 
@@ -16,6 +15,7 @@ export default function HomeClientWrapper() {
         <div 
             style={{
                 position: 'fixed',
+                zIndex: 100,
                 top: 0,
                 left: 0,
                 right: 0,

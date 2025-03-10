@@ -8,6 +8,13 @@
   .ant-breadcrumb{
     font-weight: bolder;
   }
+
+  .ant-layout.css-dev-only-do-not-override-1uq9j6g{
+    padding: 5% 10% !important;
+    display: flex;
+    flex-wrap: wrap;
+
+  }
   
   @media (max-width: 600px) {
     .custom-sider {
@@ -38,6 +45,14 @@
       height: 0px;
     }
 
+    .ant-layout-sider.ant-layout-sider-dark.ant-layout-sider-collapsed {
+      width: 0 !important;
+      min-width: 0 !important;
+      }
+
+      .ant-layout.css-dev-only-do-not-override-1uq9j6g{
+        padding: 15% 5% !important;
+      }
   }
 
 @media (max-width: 420px){

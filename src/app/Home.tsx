@@ -12,7 +12,8 @@ function Home({ children }: Readonly<HomeProps>) {
             <Layout style = {{height: '100vh'}}>
                 <HomeClientWrapper />
 
-                <Content style={{padding: '10% 20% !important',}}>
+                {/* <Content style={{padding: '10% 20% !important',}}> */}
+                <Content>
                     {children}
                 </Content>
             </Layout>
