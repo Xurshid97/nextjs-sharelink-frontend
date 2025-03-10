@@ -25,6 +25,7 @@ export default function PublicCategories({ categories }: { categories: Category[
                 padding: "0 16px",
                 position: "relative",
                 zIndex: 100,
+                border: '1px solid red',
             }}>
             {
                 loading ?
